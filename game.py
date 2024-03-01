@@ -30,7 +30,7 @@ class TicTacToe():
     @staticmethod
     def print_board_nums():
         # 0 | 1 | 2
-        number_board = [[str(i) for i in range(j*3, (j+1)*3)] for j in range(3)]
+        number_board = [[str(i+1) for i in range(j*3, (j+1)*3)] for j in range(3)]
         for row in number_board:
             print('| ' + ' | '.join(row) + ' |')
 
@@ -76,20 +76,20 @@ class TicTacToe():
 
 
 def play(game, x_player, o_player, print_game=True):
-
+    chato = int(input("How many moves would you like me to look ahead? (1-8) "))
     if print_game:
         game.print_board_nums()
 
-    letter = 'X'
+    letter = 'C'
     while game.empty_squares():
-        if letter == 'O':
+        if letter == 'H':
             square = o_player.get_move(game)
         else:
-            square = x_player.get_move(game)
+            square = x_player.get_move(game, chato)
         if game.make_move(square, letter):
 
             if print_game:
-                print(letter + ' makes a move to square {}'.format(square))
+                print(letter + ' makes a move to square {}'.format(square+1))
                 game.print_board()
                 print('')
 
@@ -97,7 +97,7 @@ def play(game, x_player, o_player, print_game=True):
                 if print_game:
                     print(letter + ' wins!')
                 return letter  # ends the loop and exits the game
-            letter = 'O' if letter == 'X' else 'X'  # switches player
+            letter = 'H' if letter == 'C' else 'C'  # switches player
 
         time.sleep(.8)
 
@@ -107,7 +107,8 @@ def play(game, x_player, o_player, print_game=True):
 
 
 if __name__ == '__main__':
-    x_player = SmartComputerPlayer('X')
-    o_player = HumanPlayer('O')
+    x_player = SmartComputerPlayer('C')
+    #x_player = RandomComputerPlayer('C')
+    o_player = HumanPlayer('H')
     t = TicTacToe()
     play(t, x_player, o_player, print_game=True)
